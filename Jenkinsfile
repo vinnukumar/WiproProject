@@ -11,7 +11,7 @@ pipeline{
         }
         stage('Nexus Deploy'){
             steps{
-                nexusArtifactUploader artifacts: [[artifactId: 'WiproProject', classifier: '', file: 'targetWiproProject.war', type: 'war']], 
+                nexusArtifactUploader artifacts: [[artifactId: 'WiproProject', classifier: '', file: 'target/WiproProject.war', type: 'war']], 
                 credentialsId: 'nexus3', 
                 groupId: 'in.wipro', 
                 nexusUrl: '172.31.47.115:8081', 
