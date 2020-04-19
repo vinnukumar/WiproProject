@@ -26,5 +26,20 @@ pipeline{
                 }
             }
         }
+        stage('Tomcat Deploy'){
+            steps{
+                sshagent(['tomcat-dev']) {
+                    script{
+                        def userHost = "ec2-user@172.31.1.251"
+                        def tomcatBin = "ec2-user@172.31.1.251 /opt/tomcat8/bin"
+                        // copy war file to tomcat webapps
+                        sh "scp -o StrictHostKeyChecking=no  target/*.war ${userHost}: /opt/tomcat8/webapps/WiproProject.war"
+                        // stop and start tomcat
+                        sh "ssh ${tomcatBin}/shutdown.sh"
+                        sh "ssh ${tomcatBin}/startup.sh"
+                    }
+                }
+            }
+        }
     }
 }
