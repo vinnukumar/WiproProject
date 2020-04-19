@@ -31,10 +31,10 @@ pipeline{
             steps{
                 sshagent(['tomcat-dev']) {
                     // copy of war file to tomcat webapps
-                    sh "scp -o StrictHostKeyChecking=no target/*.war ec2-user@13.233.151.154:/opt/tomcat8/webapps/WiproProject.war"
+                    sh "scp -o StrictHostKeyChecking=no target/*.war ec2-user@172.31.1.251:/opt/tomcat8/webapps/WiproProject.war"
                     // stop and start tomcat
-                    sh "ssh ec2-user@13.233.151.154 /opt/tomcat8/bin/shutdown.sh"
-                    sh "ssh ec2-user@13.233.151.154 /opt/tomcat8/bin/startup.sh"
+                    sh "ssh ec2-user@172.31.1.251 /opt/tomcat8/bin/shutdown.sh"
+                    sh "ssh ec2-user@172.31.1.251 /opt/tomcat8/bin/startup.sh"
                 }
             }
         }
