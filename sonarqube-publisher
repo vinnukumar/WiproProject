@@ -1,0 +1,27 @@
+pipeline{
+    agent any
+    tools {
+        maven 'maven3'
+    }
+    stages{
+        stage('Git Checkout'){
+            steps{
+                git url: "https://github.com/vinnukumar/WiproProject"
+            }
+        }
+        stage('Publish to SonarQube'){
+            steps{
+                withSonarQubeEnv('sonar7') {
+                    sh 'mvn clean package sonar:sonar'
+                }
+            }
+        }
+        stage('Sonar status check'){
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+        }
+    }
+}
